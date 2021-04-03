@@ -1,10 +1,11 @@
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit">
     <label>Email:</label>
     <input type="email" required v-model="email" />
 
     <label>Password:</label>
     <input type="password" required v-model="password" />
+    <div v-if="passwordError" class="error">{{ passwordError }}</div>
 
     <label>Role:</label>
     <select v-model="role">
@@ -25,7 +26,13 @@
 
     <div class="terms">
       <input type="checkbox" required v-model="terms" />
-      <label>Accept terms and conditions</label>
+      <label class="disable-dragging" @click="toggleTerms"
+        >Accept terms and conditions</label
+      >
+    </div>
+
+    <div class="submit">
+      <button>Create a Account</button>
     </div>
   </form>
 </template>
@@ -40,6 +47,7 @@ export default {
       terms: false,
       tempSkill: "",
       skills: [],
+      passwordError: "",
     };
   },
   methods: {
@@ -56,16 +64,24 @@ export default {
         return skill !== item;
       });
     },
-  },
-  updated() {
-    console.log(
-      this.email,
-      this.password,
-      this.role,
-      this.terms,
-      this.tempSkill,
-      this.skills
-    );
+    toggleTerms() {
+      this.terms = !this.terms;
+    },
+    handleSubmit() {
+      // validate password
+      this.passwordError =
+        this.password.length > 5
+          ? ""
+          : "Password must be at least 6 chars long.";
+
+      if (!this.passwordError) {
+        console.log("email: ", this.email);
+        console.log("password: ", this.password);
+        console.log("role: ", this.role);
+        console.log("skills: ", this.skills);
+        console.log("terms: ", this.terms);
+      }
+    },
   },
 };
 </script>
@@ -105,6 +121,17 @@ input[type="checkbox"] {
   position: relative;
   top: 2px;
 }
+button {
+  background: #0b6dff;
+  border: 0;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 20px;
+}
+
+.submit {
+  text-align: center;
+}
 
 .pill {
   display: inline-block;
@@ -117,5 +144,18 @@ input[type="checkbox"] {
   font-weight: bold;
   color: #777;
   cursor: pointer;
+}
+.disable-dragging {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.error {
+  color: crimson;
+  padding-top: 10px;
+  font-size: 0.3em;
+  font-weight: bold;
 }
 </style>
