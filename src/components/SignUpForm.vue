@@ -11,7 +11,27 @@
       <option value="developer">Developer</option>
       <option value="designer">Designer</option>
     </select>
+
+    <div class="terms">
+      <input type="checkbox" required v-model="terms" />
+      <label>Accept terms and conditions</label>
+    </div>
+
+    <div>
+      <input type="checkbox" value="shaun" v-model="names" />
+      <label>Shaun</label>
+    </div>
+    <div>
+      <input type="checkbox" value="james" v-model="names" />
+      <label>James</label>
+    </div>
+    <div>
+      <input type="checkbox" value="maria" v-model="names" />
+      <label>Maria</label>
+    </div>
   </form>
+
+  {{ names }}
 </template>
 
 <script>
@@ -21,10 +41,12 @@ export default {
       email: "",
       password: "",
       role: "developer",
+      terms: false,
+      names: [],
     };
   },
   updated() {
-    console.log(this.email, this.password, this.role);
+    console.log(this.email, this.password, this.role, this.terms, this.names);
   },
 };
 </script>
@@ -56,5 +78,12 @@ select {
   border: none;
   border-bottom: 1px solid #ddd;
   color: #555;
+}
+input[type="checkbox"] {
+  display: inline-block;
+  width: 16px;
+  margin: 0 10px 0 0;
+  position: relative;
+  top: 2px;
 }
 </style>
