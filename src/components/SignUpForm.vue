@@ -2,8 +2,15 @@
   <form>
     <label>Email:</label>
     <input type="email" required v-model="email" />
+
     <label>Password:</label>
     <input type="password" required v-model="password" />
+
+    <label>Role:</label>
+    <select v-model="role">
+      <option value="developer">Developer</option>
+      <option value="designer">Designer</option>
+    </select>
   </form>
 </template>
 
@@ -13,7 +20,11 @@ export default {
     return {
       email: "",
       password: "",
+      role: "developer",
     };
+  },
+  updated() {
+    console.log(this.email, this.password, this.role);
   },
 };
 </script>
@@ -36,7 +47,8 @@ label {
   letter-spacing: 1px;
   font-weight: bold;
 }
-input {
+input,
+select {
   display: block;
   padding: 10px 6px;
   width: 100%;
